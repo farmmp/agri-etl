@@ -1,16 +1,14 @@
-"""Load package — loaders for persisting transformed sensor records."""
+"""Load package — writers for various sinks."""
 
 from agri_etl.load.base_loader import BaseLoader, LoadResult
 from agri_etl.load.csv_loader import CsvLoader
-
-try:
-    from agri_etl.load.postgres_loader import PostgresLoader
-except ImportError:  # psycopg2 not installed
-    PostgresLoader = None  # type: ignore[assignment,misc]
+from agri_etl.load.postgres_loader import PostgresLoader
+from agri_etl.load.mqtt_loader import MqttLoader
 
 __all__ = [
     "BaseLoader",
     "LoadResult",
     "CsvLoader",
     "PostgresLoader",
+    "MqttLoader",
 ]

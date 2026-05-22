@@ -1,55 +1,64 @@
-"""Base loader interface for writing transformed agricultural sensor data."""
+"""Abstract base class for all loaders."""
 
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from typing import Any
-
-from agri_etl.transform.base_transformer import TransformResult
 
 
 @dataclass
 class LoadResult:
-    """Outcome of a single load operation."""
+    """Outcome of writing a single record."""
 
-    records_written: int
-    destination: str
-    errors: list[str] = field(default_factory=list)
-
-    @property
-    def success(self) -> bool:
-        return len(self.errors) == 0
+    sensor_id: str
+    timestamp: str
+    success: bool
+    rows_written: int = 0
+    error: str | None = None
+    metadata: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            "records_written": self.records_written,
-            "destination": self.destination,
-            "errors": self.errors,
+            "sensor_id": self.sensor_id,
+            "timestamp": self.timestamp,
             "success": self.success,
+            "rows_written": self.rows_written,
+            "error": self.error,
+            "metadata": self.metadata,
         }
 
 
-class BaseLoader(ABC):
-    """Abstract base class for all loaders."""
+class BaseLoader:
+    """Base class every loader must extend."""
 
     def __init__(self, config: dict[str, Any]) -> None:
-        if not isinstance(config, dict):
-            raise TypeError("config must be a dict")
-        self.config = config
+        self.config: dict[str, Any] = dict(config)
+        self._client: Any = None
         self._validate_config()
 
-    def _validate_config(self) -> None:  # noqa: B027
-        """Override in subclasses to enforce required config keys."""
+    # ------------------------------------------------------------------
+    # Subclass interface
+    # ------------------------------------------------------------------
 
-    @abstractmethod
-    def connect(self) -> None:
-        """Open connection / initialise resources."""
+    def _validate_config(self) -> None:  # pragma: no cover
+        """Validate and apply defaults to *self.config*."""
 
-    @abstractmethod
-    def disconnect(self) -> None:
-        """Close connection / release resources."""
+    def connect(self) -> None:  # pragma: no cover
+        raise NotImplementedError
 
-    @abstractmethod
-    def write_batch(self, result: TransformResult) -> LoadResult:
-        """Persist a batch of transformed records and return a LoadResult."""
+    def disconnect(self) -> None:  # pragma: no cover
+        raise NotImplementedError
+
+    def write_batch(self, results: list[LoadResult]) -> int:  # pragma: no cover
+        raise NotImplementedError
+
+    # ------------------------------------------------------------------
+    # Context-manager support
+    # ------------------------------------------------------------------
+
+    def __enter__(self) -> "BaseLoader":
+        self.connect()
+        return self
+
+    def __exit__(self, *_: Any) -> None:
+        self.disconnect()

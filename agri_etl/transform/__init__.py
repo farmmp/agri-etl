@@ -1,4 +1,3 @@
-"""Transform sub-package – exposes all transformers for convenient import."""
 from agri_etl.transform.base_transformer import BaseTransformer, TransformResult
 from agri_etl.transform.unit_transformer import UnitTransformer
 from agri_etl.transform.filter_transformer import FilterTransformer
@@ -16,6 +15,8 @@ from agri_etl.transform.zscore_transformer import ZScoreTransformer
 from agri_etl.transform.outlier_transformer import OutlierTransformer
 from agri_etl.transform.cast_transformer import CastTransformer
 from agri_etl.transform.tag_transformer import TagTransformer
+from agri_etl.transform.expression_transformer import ExpressionTransformer
+from agri_etl.transform.split_transformer import SplitTransformer
 
 __all__ = [
     "BaseTransformer",
@@ -36,4 +37,6 @@ __all__ = [
     "OutlierTransformer",
     "CastTransformer",
     "TagTransformer",
+    "ExpressionTransformer",
+    "SplitTransformer",
 ]

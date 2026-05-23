@@ -17,6 +17,8 @@ from agri_etl.transform.cast_transformer import CastTransformer
 from agri_etl.transform.tag_transformer import TagTransformer
 from agri_etl.transform.expression_transformer import ExpressionTransformer
 from agri_etl.transform.split_transformer import SplitTransformer
+from agri_etl.transform.merge_transformer import MergeTransformer
+from agri_etl.transform.interpolate_transformer import InterpolateTransformer
 
 __all__ = [
     "BaseTransformer",
@@ -39,4 +41,6 @@ __all__ = [
     "TagTransformer",
     "ExpressionTransformer",
     "SplitTransformer",
+    "MergeTransformer",
+    "InterpolateTransformer",
 ]

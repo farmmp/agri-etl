@@ -22,6 +22,7 @@ from agri_etl.transform.interpolate_transformer import InterpolateTransformer
 from agri_etl.transform.window_transformer import WindowTransformer
 from agri_etl.transform.mask_transformer import MaskTransformer
 from agri_etl.transform.flatten_transformer import FlattenTransformer
+from agri_etl.transform.resample_transformer import ResampleTransformer
 
 __all__ = [
     "BaseTransformer",
@@ -49,4 +50,5 @@ __all__ = [
     "WindowTransformer",
     "MaskTransformer",
     "FlattenTransformer",
+    "ResampleTransformer",
 ]

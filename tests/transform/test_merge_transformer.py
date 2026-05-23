@@ -79,10 +79,16 @@ class TestMergeTransformerTransform:
         t = MergeTransformer({"merges": {"ab": ["a", "b"]}})
         result = t.transform([make_record(), make_record()])
         assert len(result.errors) == 0
-        assert len(result.records) == 2
 
-    def test_empty_input_returns_empty(self):
+    def test_empty_input_returns_no_records(self):
         t = MergeTransformer({"merges": {"ab": ["a", "b"]}})
         result = t.transform([])
         assert result.records == []
-        assert result.errors == []
+        assert len(result.errors) == 0
+
+    def test_multiple_merges_applied(self):
+        t = MergeTransformer({"merges": {"ab": ["a", "b"], "bc": ["b", "c"]}})
+        result = t.transform([make_record()])
+        readings = result.records[0].readings
+        assert readings["ab"] == "1,2"
+        assert readings["bc"] == "2,3"

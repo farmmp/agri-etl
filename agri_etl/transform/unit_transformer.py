@@ -30,6 +30,15 @@ class UnitTransformer(BaseTransformer):
             raise ValueError("UnitTransformer requires 'conversions' in config")
         if not isinstance(self.config["conversions"], dict):
             raise TypeError("'conversions' must be a dict")
+        for field_name, spec in self.config["conversions"].items():
+            if not isinstance(spec, dict):
+                raise TypeError(
+                    f"Conversion spec for '{field_name}' must be a dict with 'from' and 'to' keys"
+                )
+            if "from" not in spec or "to" not in spec:
+                raise ValueError(
+                    f"Conversion spec for '{field_name}' must contain both 'from' and 'to' keys"
+                )
 
     def transform(self, record: SensorRecord) -> TransformResult:
         transformed: dict[str, Any] = dict(record.values)

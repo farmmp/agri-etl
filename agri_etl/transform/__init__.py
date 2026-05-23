@@ -1,4 +1,4 @@
-"""Transform sub-package — exposes all built-in transformers."""
+"""Transform package — exposes all transformer classes."""
 from agri_etl.transform.base_transformer import BaseTransformer, TransformResult
 from agri_etl.transform.unit_transformer import UnitTransformer
 from agri_etl.transform.filter_transformer import FilterTransformer
@@ -11,6 +11,7 @@ from agri_etl.transform.drop_transformer import DropTransformer
 from agri_etl.transform.timestamp_transformer import TimestampTransformer
 from agri_etl.transform.schema_transformer import SchemaTransformer
 from agri_etl.transform.deduplicate_transformer import DeduplicateTransformer
+from agri_etl.transform.normalize_transformer import NormalizeTransformer
 
 __all__ = [
     "BaseTransformer",
@@ -26,4 +27,5 @@ __all__ = [
     "TimestampTransformer",
     "SchemaTransformer",
     "DeduplicateTransformer",
+    "NormalizeTransformer",
 ]

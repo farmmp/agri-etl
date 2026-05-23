@@ -19,6 +19,7 @@ from agri_etl.transform.expression_transformer import ExpressionTransformer
 from agri_etl.transform.split_transformer import SplitTransformer
 from agri_etl.transform.merge_transformer import MergeTransformer
 from agri_etl.transform.interpolate_transformer import InterpolateTransformer
+from agri_etl.transform.window_transformer import WindowTransformer
 
 __all__ = [
     "BaseTransformer",
@@ -43,4 +44,5 @@ __all__ = [
     "SplitTransformer",
     "MergeTransformer",
     "InterpolateTransformer",
+    "WindowTransformer",
 ]

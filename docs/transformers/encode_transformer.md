@@ -55,6 +55,20 @@ EncodeTransformer({
 **Input readings:** `{"alert_status": "warn"}`  
 **Output readings:** `{"alert_status_ok": 0, "alert_status_warn": 1, "alert_status_err": 0}`
 
+## Handling Unknown Values
+
+When a record contains a value not present in the supplied `classes` list the
+behaviour depends on the strategy:
+
+| Strategy | Behaviour |
+|---|---|
+| `label` | The unknown value is appended to the class list and assigned the next available index. |
+| `onehot` | All indicator columns for that field are set to `0` (no class is active). |
+
+This only affects the **current batch**; because label maps are not persisted,
+the assigned index may differ in a subsequent `transform()` call.  To guarantee
+consistent encoding across batches always provide an explicit `classes` list.
+
 ## Notes
 
 - Fields not listed in `encodings` are passed through unchanged.

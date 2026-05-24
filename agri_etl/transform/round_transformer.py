@@ -12,6 +12,16 @@ class RoundTransformer(BaseTransformer):
     Config keys:
         fields (dict[str, int]): mapping of field name -> decimal places.
             Use -1 to round to the nearest integer.
+
+    Example config::
+
+        {
+            "fields": {
+                "temperature": 2,
+                "humidity": 1,
+                "pressure": -1
+            }
+        }
     """
 
     def _validate_config(self) -> None:
@@ -27,6 +37,19 @@ class RoundTransformer(BaseTransformer):
                 raise ValueError(
                     f"Decimal places for '{key}' must be an int, got {type(places).__name__}"
                 )
+            if places < -1:
+                raise ValueError(
+                    f"Decimal places for '{key}' must be >= -1, got {places}"
+                )
+
+    def _round_value(self, value: float, places: int) -> float:
+        """Round *value* to *places* decimal places.
+
+        A *places* value of -1 rounds to the nearest integer but still
+        returns a float for type consistency.
+        """
+        ndigits = places if places >= 0 else 0
+        return round(float(value), ndigits)
 
     def transform(self, record: SensorRecord) -> TransformResult:
         fields: dict[str, int] = self.config["fields"]
@@ -42,7 +65,7 @@ class RoundTransformer(BaseTransformer):
                     f"Field '{field}' is not numeric (got {type(value).__name__}); skipped"
                 )
                 continue
-            readings[field] = round(float(value), places if places >= 0 else 0)
+            readings[field] = self._round_value(value, places)
 
         rounded_record = SensorRecord(
             sensor_id=record.sensor_id,

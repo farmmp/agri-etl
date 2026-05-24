@@ -1,3 +1,5 @@
+"""Transform sub-package — re-exports all transformer classes."""
+from agri_etl.transform.base_transformer import BaseTransformer, TransformResult
 from agri_etl.transform.unit_transformer import UnitTransformer
 from agri_etl.transform.filter_transformer import FilterTransformer
 from agri_etl.transform.aggregation_transformer import AggregationTransformer
@@ -28,8 +30,12 @@ from agri_etl.transform.threshold_transformer import ThresholdTransformer
 from agri_etl.transform.scale_transformer import ScaleTransformer
 from agri_etl.transform.bucket_transformer import BucketTransformer
 from agri_etl.transform.lag_transformer import LagTransformer
+from agri_etl.transform.diff_transformer import DiffTransformer
+from agri_etl.transform.rate_transformer import RateTransformer
 
 __all__ = [
+    "BaseTransformer",
+    "TransformResult",
     "UnitTransformer",
     "FilterTransformer",
     "AggregationTransformer",
@@ -60,4 +66,6 @@ __all__ = [
     "ScaleTransformer",
     "BucketTransformer",
     "LagTransformer",
+    "DiffTransformer",
+    "RateTransformer",
 ]

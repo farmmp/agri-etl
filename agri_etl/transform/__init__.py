@@ -34,6 +34,7 @@ from agri_etl.transform.rate_transformer import RateTransformer
 from agri_etl.transform.ewma_transformer import EwmaTransformer
 from agri_etl.transform.quantize_transformer import QuantizeTransformer
 from agri_etl.transform.rolling_transformer import RollingTransformer
+from agri_etl.transform.spike_transformer import SpikeTransformer
 
 __all__ = [
     "BaseTransformer",
@@ -73,4 +74,5 @@ __all__ = [
     "EwmaTransformer",
     "QuantizeTransformer",
     "RollingTransformer",
+    "SpikeTransformer",
 ]

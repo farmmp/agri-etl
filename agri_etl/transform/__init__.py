@@ -24,6 +24,7 @@ from agri_etl.transform.mask_transformer import MaskTransformer
 from agri_etl.transform.flatten_transformer import FlattenTransformer
 from agri_etl.transform.resample_transformer import ResampleTransformer
 from agri_etl.transform.sanitize_transformer import SanitizeTransformer
+from agri_etl.transform.encode_transformer import EncodeTransformer
 
 __all__ = [
     "BaseTransformer",
@@ -53,4 +54,5 @@ __all__ = [
     "FlattenTransformer",
     "ResampleTransformer",
     "SanitizeTransformer",
+    "EncodeTransformer",
 ]
